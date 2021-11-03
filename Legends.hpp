@@ -5,6 +5,7 @@
 #include <vector>
 
 /*---- LIBRARY SFML ----*/
+#include "SFML/Network.hpp"
 
 /*---- LOCAL FILE ----*/
 #include "Map.hpp"
@@ -19,11 +20,13 @@ class Legends {
     ~Legends();
 
     /*---- OTHER ----*/
-    void run();                         // Main thread that coordonate everything
+    void waitForPlayer();                         // Main thread that wait for players
 
     protected:
 
     private:
+    sf::TcpListener _listener;
+
     std::vector<Map> _maps;             // All maps in the 
     std::vector<Player> _players;       // All the players
 

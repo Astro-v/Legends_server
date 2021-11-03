@@ -2,6 +2,7 @@
 #define __PLAYER__
 
 /*---- LIBRARY ----*/
+#include <string>
 
 /*---- LIBRARY SFML ----*/
 #include "SFML/Network.hpp"
@@ -23,8 +24,13 @@ class Player {
     ~Player();
 
     /*---- COMMUNICATION ----*/
-    bool send(STC::Protocol protocol) const;       // Return true if everything has been sent well
+    bool loadMap(STC::Protocol protocol) const;       // Return true if everything has been sent well
     bool receive();                                // Return true if something has been receive
+
+    /*---- ACCESSOR ----*/
+    std::string getName() const;
+    sf::Uint32 getPos() const;
+    sf::Uint32 getId() const;
 
     protected:
 
@@ -32,6 +38,9 @@ class Player {
     sf::TcpSocket _socket;                         // Socket for comunication
     sf::IpAddress _ipAddress;                      // Ip address of the player
     unsigned short _port;                          // Port for the connection
+    std::string _name;
+    sf::Uint32 _pos;                               // Pos of the player
+    sf::Uint32 _id;
 }
 
 #endif // __PLAYER__

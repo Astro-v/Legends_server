@@ -9,5 +9,6 @@
 
 /*---- SERVER ----*/
 
+#define NONE 0
 
 #endif // __HEADER__

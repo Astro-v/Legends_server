@@ -29,8 +29,8 @@ class QuadTree {
 
     private:
     bool _leaf;                        // True if it's a leaf
-    QuadTree* _child[2];               // Pointer on child (0 if its a leaf)
-    std::vector<*Map> _map;            // Pointer on all maps in that QuadTree
+    std::vector<QuadTree> _child;      // Child
+    std::vector<&Map> _map;            // Reference on all maps in that QuadTree
 
     /*---- THREAD ----*/
     sf::Mutex _mutex;           
