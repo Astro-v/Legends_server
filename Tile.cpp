@@ -7,7 +7,11 @@
 #include "Tile.hpp"
 
 /*---- CONSTRUCTOR ----*/
-Tile::Tile(sf::Uint32 val, sf::Uint32 subspace):_val(val),_subspace(subspace) {
+Tile::Tile():_val(VOID),_subspace(0) {
+    _crossable = false;
+}
+
+Tile::Tile(int val, int subspace):_val(val),_subspace(subspace) {
     if (_val < CROSSABLE && _val != VOID) {
         _crossable = true;
     } else {
@@ -24,4 +28,13 @@ Tile::~Tile() {
 // Return the crossability of the tile
 bool Tile::getCrossable() {
     return _crossable;
+}
+
+void Tile::setVal(int val) {
+    _val = val;
+    if (_val < CROSSABLE && _val != VOID) {
+        _crossable = true;
+    } else {
+        _crossable = false;
+    }
 }

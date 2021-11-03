@@ -7,9 +7,11 @@
 
 /*---- LOCAL FILE ----*/
 #include "Map.hpp"
-#include "Player.hpp"
+// #include "Player.hpp"
 #include "Legends.hpp"
 #include "Dimension.hpp"
+
+#define SERVER_PORT 5500	
 
 /*---- CONSTRUCTOR ----*/
 Legends::Legends():_running(0) {
@@ -26,8 +28,8 @@ Legends::~Legends() {
 /*---- INITIALIZE ----*/
 // Load all the maps
 void Legends::LoadMaps() {
-    for (int index=0;index<NUMBER::MAPS;++i) {
-        _maps.push_back();
+    for (int index=0;index<NUMBER_MAPS;++index) {
+        std::cout << "Map loaded : Maps/map"+std::to_string(index+1) << std::endl;
         _maps[index].loadMap(std::string("Maps/map"+std::to_string(index)));
     }
 }

@@ -31,11 +31,11 @@ class Legends {
 
     bool _running;
 
-    std::vector<Map> _maps;             // All maps in the 
+    Map _maps[NUMBER_MAPS];             // All maps in the 
     //std::vector<Player> _players;       // All the players
 
     /*---- THREAD ----*/
     sf::Mutex _mutex;
-}
+};
 
 #endif // __LEGENDS__

@@ -20,7 +20,7 @@ namespace STC { // Server To Client
     /*---- LOAD_MAP ----*/ 
     enum LoadMap {
         EOF, PLAYER, MONSTER
-    }
+    };
 
     /*---- UPDATE_MAP ----*/
     enum UpdateMap {

@@ -11,12 +11,11 @@
 #include "Map.hpp"
 #include "Tile.hpp"
 #include "Dimension.hpp"
+#include "Header.hpp"
 
 /*---- CONSTRUCTOR ----*/
-Map::Map():_namePlayer(0),_numberOfNeighbors(0),_posX(0),_posY(0),_posZ(0) {
-    for (int index=0;index<NUMBER::TILE;++index) {
-        _tile.push_back(Tile(VOID,0));
-    }
+Map::Map():_numberPlayers(0),_numberOfNeighbors(0),_posX(0),_posY(0),_posZ(0) {
+
 }
 
 /*---- DESTRUCTOR ----*/
@@ -29,23 +28,25 @@ Map::~Map() {
 void Map::loadMap(std::string const& path) {
     // Opening the file
     std::ifstream file(path);
-    if(file) {
+    if (file) {
         // Everything is ok for reading
         std::string line;
-        while(std::getline(file, line)) {
-            if (std::stoi(line[0]) == LOAD::POS_MAP) {
-                _posX = (sf::Uint32)std::stoi(line[2]);
-                _posY = (sf::Uint32)std::stoi(line[4]);
-                _posZ = (sf::Uint32)std::stoi(line[6]);
-            } else if (std::stoi(line[0]) == LOAD::POS_NEIGHBORS) {
+        int it = 0;
+        while (std::getline(file, line)) {
+            if (ctoi(line[0]) == (int)LOAD::POS_MAP) {
+                _posX = ctoi(line[2]);
+                _posY = ctoi(line[4]);
+                _posZ = ctoi(line[6]);
+            } else if (ctoi(line[0]) == (int)LOAD::POS_NEIGHBORS) {
                 ++_numberOfNeighbors;
-                _posXNeighbors.push_back((sf::Uint32)std::stoi(line[2]));
-                _posYNeighbors.push_back((sf::Uint32)std::stoi(line[4]));
-                _posZNeighbors.push_back((sf::Uint32)std::stoi(line[6]));
-            } else if std::stoi(line[0]) == LOAD::TILE) {
-                for (int index=2;index<line.length();index+=2) {
-                    _tile[(index-2)/2] = Tile((sf::Uint32)std::stoi(line[index]),0);
+                _posXNeighbors.push_back(ctoi(line[2]));
+                _posYNeighbors.push_back(ctoi(line[4]));
+                _posZNeighbors.push_back(ctoi(line[6]));
+            } else if (ctoi(line[0]) == (int)LOAD::TILE) {
+                for (int index=0;index<NUMBER_TILE_Y;++index) {
+                    _tile[it][index].setVal(ctoi(line[2*index+2]));
                 }
+                ++it; 
             }
         }
     } else {
@@ -61,7 +62,7 @@ void Map::receive() {
 // Add the player and send to this player the data about the map
 //void Map::addPlayer(Player& player) {
 
-}
+//}
 
 // Move a player to another map
 void Map::changeMap(const int& index) {

@@ -10,6 +10,7 @@
 
 /*---- LOCAL FILE ----*/
 #include "Tile.hpp"
+#include "Dimension.hpp"
 
 class Map {
     public:
@@ -36,20 +37,20 @@ class Map {
     private:
     //std::vector<Player &> _players;          // List all player on the map
     int _numberPlayers;                      // Number of player on the map
-    std::vector<TILE> _tile;                 // Table of all tiles
+    Tile _tile[NUMBER_TILE_X][NUMBER_TILE_Y];                 // Table of all tiles
 
-    std::vector<Map &>  _neighbors;          // References over the neighbors map
+    //std::vector<Map &>  _neighbors;          // References over the neighbors map
 
-    sf::Uint32 _posX;                        // Position of the map
-    sf::Uint32 _posY;                        // Position of the map
-    sf::Uint32 _posZ;                        // Altitude of the map (<0 for underground maps)
+    int _posX;                        // Position of the map
+    int _posY;                        // Position of the map
+    int _posZ;                        // Altitude of the map (<0 for underground maps)
 
-    std::vector<sf::Uint32> _posXNeighbors;  // Position of the neighbors map
-    std::vector<sf::Uint32> _posYNeighbors;  // Position of the neighbors map
-    std::vector<sf::Uint32> _posZNeighbors;  // Altitude of the neighbors map
+    std::vector<int> _posXNeighbors;  // Position of the neighbors map
+    std::vector<int> _posYNeighbors;  // Position of the neighbors map
+    std::vector<int> _posZNeighbors;  // Altitude of the neighbors map
 
     int _numberOfNeighbors;                   // Number of Neighbors
-}
+};
 
 namespace LOAD { // For loading the map
     /*
@@ -59,7 +60,7 @@ namespace LOAD { // For loading the map
     */
     enum Map {
         POS_MAP, POS_NEIGHBORS, TILE
-    }
+    };
 }
 
 

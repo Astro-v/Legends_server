@@ -14,20 +14,22 @@
 class Tile {
     public:
     /*---- CONSTRUCTOR ----*/
-    Tile(sf::Uint32 val, sf::Uint32 subspace);
+    Tile();
+    Tile(int val, int subspace);
 
     /*---- DESTRUCTOR ----*/
     ~Tile();
 
     /*---- ACCESSOR ----*/
     bool getCrossable();           // Return the crossability of the tile
+    void setVal(int val);
 
     protected:
 
     private:
-    sf::Uint32 _val;               // Value for the tile (0:Nothing)    
+    int _val;               // Value for the tile (0:Nothing)    
     bool _crossable;               // True if it's crossable
-    sf::Uint32 _subspace;          // number of the corresponding subspace. All the tile with the same subspace value can be reach
+    int _subspace;          // number of the corresponding subspace. All the tile with the same subspace value can be reach
 };
 
 /*

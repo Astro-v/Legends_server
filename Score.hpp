@@ -14,7 +14,7 @@ namespace SCORE {
     #define MONSTER 5         // Score for a monster
 
     using Score = int;
-}
+};
 
 
 #endif // __SCORE__

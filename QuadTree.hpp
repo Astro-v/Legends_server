@@ -38,6 +38,6 @@ class QuadTree {
 
     /*---- SCORE ----*/
     SCORE::Score _score;
-}
+};
 
 #endif // __QUAD_TREE__

@@ -41,6 +41,6 @@ class Player {
     std::string _name;
     sf::Uint32 _pos;                               // Pos of the player
     sf::Uint32 _id;
-}
+};
 
 #endif // __PLAYER__
