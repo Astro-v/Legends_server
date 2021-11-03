@@ -9,7 +9,7 @@
 
 /*---- LOCAL FILE ----*/
 #include "Map.hpp"
-#include "Player.hpp"
+//#include "Player.hpp"
 
 class Legends {
     public:
@@ -23,12 +23,16 @@ class Legends {
     void waitForPlayer();                         // Main thread that wait for players
 
     protected:
+    /*---- INITIALIZE ----*/
+    void LoadMaps();                              // Load all the maps
 
     private:
     sf::TcpListener _listener;
 
+    bool _running;
+
     std::vector<Map> _maps;             // All maps in the 
-    std::vector<Player> _players;       // All the players
+    //std::vector<Player> _players;       // All the players
 
     /*---- THREAD ----*/
     sf::Mutex _mutex;

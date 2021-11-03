@@ -4,21 +4,23 @@
 /*---- LIBRARY ----*/
 
 /*---- LIBRARY SFML ----*/
+#include "SFML/Network.hpp"
 
 /*---- LOCAL FILE ----*/
 
-#define CROSSABLE 10000             // if _val<1000 the tile is crossable
+#define CROSSABLE 10000             // if _val<10000 the tile is crossable
+#define VOID 0                      // void tile (uncrossable)
 
 class Tile {
     public:
     /*---- CONSTRUCTOR ----*/
-    Tile(int val);
+    Tile(sf::Uint32 val, sf::Uint32 subspace);
 
     /*---- DESTRUCTOR ----*/
     ~Tile();
 
     /*---- ACCESSOR ----*/
-    bool getCrossable();           // Return the crissability of the tile
+    bool getCrossable();           // Return the crossability of the tile
 
     protected:
 
@@ -27,5 +29,11 @@ class Tile {
     bool _crossable;               // True if it's crossable
     sf::Uint32 _subspace;          // number of the corresponding subspace. All the tile with the same subspace value can be reach
 };
+
+/*
+0: void
+1: grassFull
+2: sandFull
+*/
 
 #endif // __TILE__
