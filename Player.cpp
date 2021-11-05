@@ -11,11 +11,9 @@
 #include "ClientToServer.hpp"
 
 /*---- CONSTRUCTOR ----*/
-Player::Player(std::string name, sf::TcpSocket* socket):_name(name),_pos(0),_id(0),_socket(socket) {
-    _ipAddress = _socket->getRemoteAddress();
-    _port = _socket->getRemotePort();
-    ++_numberOfPlayer;
-    std::cout << "Number of player : " << _numberPlayers << std::endl;
+Player::Player():_userName("Unknown"),_pos(0),_id(0),_socket(socket),_ipAddress("0.0.0.0"),_port(0) {
+    _socket = new sf::TcpSocket;
+    _packetReceive.clear();
 }
 
 /*---- DESTRUCTOR ----*/
@@ -32,12 +30,21 @@ bool Player::sendMap(STC::Protocol protocol) const {
 
 // Return true if something has been receive
 bool Player::receive() {
-
+    _packetReceive.clear();
+    if (_socket[index].receive(_packetReceive) == sf::Socket::Done) {
+        _packetReceive >> _protocolCTS;
+        if (_protocolCTS == CTS::CONNECTION) {
+            CTS::Connection connection;
+            _packetReceive >> connection;
+            _userName = connection.userName;
+        }
+    }
+    return false;
 }                     
 
 /*---- ACCESSOR ----*/
-std::string Player::getName() const {
-    return _name;
+std::string Player::getUserName() const {
+    return _userName;
 }
 
 sf::Uint32 Player::getPos() const {
@@ -46,4 +53,17 @@ sf::Uint32 Player::getPos() const {
 
 sf::Uint32 Player::getId() const {
     return _id;
+}
+
+sf::TcpSocket* Player::getSocket() {
+    return _socket;
+}
+
+void Player::gotConnection() {
+    _ipAddress = _socket->getRemoteAddress();
+    _port = _socket->getRemotePort();
+}
+
+void Player::setUserName(std::string userName) {
+    _userName = userName;
 }

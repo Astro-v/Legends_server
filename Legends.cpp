@@ -21,14 +21,11 @@ Legends::Legends():_running(0),_numberPlayers(0) {
 
 /*---- DESTRUCTOR ----*/
 Legends::~Legends() {
-    for (int i=0;i<_socket.length();++i) {
-        delete _socket[i];
-    }
-    _socket.clear();
     for (int i=0;i<_players.length();++i) {
         delete _players[i];
     }
     _players.clear();
+    delete _newPlayer
 }
 
 /*---- INITIALIZE ----*/
@@ -45,12 +42,12 @@ void Legends::LoadMaps() {
 // Main thread that wait for players
 void Legends::waitForPlayer() { 
     std::cout << "everything is ok" << std::endl;
-    _socket.push_back(new sf::TcpSocket);
+    _newPlayer = new Player;
     while (_running) {
-        if (_listener.accept(*_socket[numberPlayer]) == sf::Socket::Done) {
-            if (FIRST_CONNECTION)
-            _players.push_back(nuw Player());
-            _socket.push_back(new sf::TcpSocket);
+        if (_listener.accept(*_newPlayer->getSocket()) == sf::Socket::Done) {
+            _newPlayer->gotConnection();
+            _players.push_back(_newPlayer);
+            _newPlayer = new Player;
         }
     }
 }

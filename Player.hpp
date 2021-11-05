@@ -28,9 +28,12 @@ class Player {
     bool receive();                                // Return true if something has been receive
 
     /*---- ACCESSOR ----*/
-    std::string getName() const;
+    std::string getUserName() const;
     sf::Uint32 getPos() const;
     sf::Uint32 getId() const;
+    sf::TcpSocket* getSocket();
+    void gotConnection();
+    void setUserName(std::string name);
 
     /*---- NUMBER OF PLAYER ----*/
     static int _numberOfPlayer;
@@ -38,10 +41,15 @@ class Player {
     protected:
 
     private:
-    sf::TcpSocket* _socket;                         // Socket for comunication
+    /*---- CONECTION DATA ----*/
+    sf::TcpSocket* _socket;                        // Socket for comunication
+    sf::Packet _packetReceive;                     // Packet for reception
     sf::IpAddress _ipAddress;                      // Ip address of the player
     unsigned short _port;                          // Port for the connection
-    std::string _name;
+    CTS::Protocol _protocolCTS;
+
+    /*---- PLAYER DATA ----*/
+    std::string _userName;
     sf::Uint32 _pos;                               // Pos of the player
     sf::Uint32 _id;
 };

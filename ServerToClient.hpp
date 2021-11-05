@@ -36,7 +36,21 @@ namespace STC { // Server To Client
 
 /*---- FLUX OPERATOR ----*/
 
+/*---- PROTOCOL ----*/
+
+sf::Packet& operator <<(sf::Packet& packet, const STC::Protocol& data){   
+	int send;
+	send = (int)data;
+    return packet << send;
+}
+
 /*---- LOAD_MAP ----*/
+
+sf::Packet& operator <<(sf::Packet& packet, const STC::LoadMap& data){   
+	int send;
+	send = (int)data;
+    return packet << send;
+}
 
 //---- PLAYER
 sf::Packet& operator <<(sf::Packet& packet, const Player& data) {
@@ -49,6 +63,14 @@ sf::Packet& operator <<(sf::Packet& packet, const Map& data) {
         packet << data.getPlayer(i);
     }
     return packet;
+}
+
+/*---- UPDATE_MAP ----*/
+
+sf::Packet& operator <<(sf::Packet& packet, const STC::UpdateMap& data){   
+	int send;
+	send = (int)data;
+    return packet << send;
 }
 
 

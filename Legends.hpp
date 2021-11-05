@@ -28,12 +28,12 @@ class Legends {
 
     private:
     sf::TcpListener _listener;
-    std::vector<sf::TcpSocket *> _socket;
 
     bool _running;
 
     Map _maps[NUMBER_MAPS];                    // All maps in the 
     std::vector<Player *> _players;            // All the players
+    Player *_newPlayer;                        // Waiting for new player
     int numberPlayer;                          // Number of players  
 
     /*---- THREAD ----*/
