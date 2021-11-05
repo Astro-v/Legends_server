@@ -34,28 +34,4 @@ sf::Packet& operator <<(sf::Packet& packet, const STC::Protocol& data);
 sf::Packet& operator <<(sf::Packet& packet, const STC::LoadMap& data);
 sf::Packet& operator <<(sf::Packet& packet, const STC::UpdateMap& data);
 
-/*---- PROTOCOL ----*/
-
-sf::Packet& operator <<(sf::Packet& packet, const STC::Protocol& data) {   
-	int send;
-	send = (int)data;
-    return packet << send;
-}
-
-/*---- LOAD_MAP ----*/
-
-sf::Packet& operator <<(sf::Packet& packet, const STC::LoadMap& data) {   
-	int send;
-	send = (int)data;
-    return packet << send;
-}
-
-/*---- UPDATE_MAP ----*/
-
-sf::Packet& operator <<(sf::Packet& packet, const STC::UpdateMap& data) {   
-	int send;
-	send = (int)data;
-    return packet << send;
-}
-
 #endif // __SERVER_TO_CLIENT__

@@ -24,7 +24,7 @@ class Legends {
 
     protected:
     /*---- INITIALIZE ----*/
-    void LoadMaps();                              // Load all the maps
+    void loadMaps();                              // Load all the maps
 
     private:
     sf::TcpListener _listener;

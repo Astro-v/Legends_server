@@ -35,7 +35,7 @@ class Player {
     void gotConnection();
 
     /*---- NUMBER OF PLAYER ----*/
-    static int _numberOfPlayer;
+    //static int _numberOfPlayer;
 
     protected:
 
@@ -69,24 +69,7 @@ namespace STC {
     };
 }
 
-sf::Packet& operator <<(sf::Packet& packet, const Player* data);
+sf::Packet& operator <<(sf::Packet& packet, const Player& data);
 sf::Packet& operator <<(sf::Packet& packet, const STC::LoadMapData& data) ;
-
-/*---- LOAD_MAP ----*/ 
-sf::Packet& operator <<(sf::Packet& packet, const STC::LoadMapData& data) {   
-    for (auto & player : data.player) {
-        packet << STC::PLAYER << *player;
-    }
-    return packet;
-}
-//---- PLAYER
-sf::Packet& operator <<(sf::Packet& packet, const Player* data) {
-    packet << data->getUserName() << data->getId() << data->getPos();
-    return packet;
-}
-
-
-
-
 
 #endif // __PLAYER__

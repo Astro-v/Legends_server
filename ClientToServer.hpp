@@ -26,19 +26,5 @@ namespace CTS { // Client To Server
 sf::Packet& operator >>(sf::Packet& packet, CTS::Protocol& data);
 sf::Packet& operator >>(sf::Packet& packet, CTS::Logged& data);
 
-/*---- PROTOCOL ----*/
-
-sf::Packet& operator >>(sf::Packet& packet, CTS::Protocol& data){   
-	int receive;
-	packet >> receive;
-    data = (CTS::Protocol)receive;
-    return packet;
-}
-
-/*---- LOGGED ----*/
-
-sf::Packet& operator >>(sf::Packet& packet, CTS::Logged& data){   
-    return packet >> data.userName;
-}
 
 #endif // __CLIENT_TO_SERVER__

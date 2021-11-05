@@ -14,9 +14,9 @@
 
 
 /*---- CONSTRUCTOR ----*/
-Legends::Legends():_running(0) {
+Legends::Legends():_running(true) {
     _listener.listen(SERVER_PORT);
-    LoadMaps();
+    loadMaps();
 
 }
 
@@ -41,11 +41,11 @@ Legends::~Legends() {
 
 /*---- INITIALIZE ----*/
 // Load all the maps
-void Legends::LoadMaps() {
+void Legends::loadMaps() {
     for (int index=0;index<NUMBER_MAPS;++index) {
         std::cout << "Map loaded : Maps/map"+std::to_string(index+1) << std::endl;
         _maps.push_back(new Map);
-        (--end(_maps))->loadMap(std::string("Maps/map"+std::to_string(index)));
+        _maps[_maps.size()-1]->loadMap(std::string("Maps/map")+std::to_string(index));
     }
 }
 
@@ -53,7 +53,7 @@ void Legends::LoadMaps() {
 /*---- OTHER ----*/
 // Main thread that wait for players
 void Legends::waitForPlayer() { 
-    std::cout << "everything is ok" << std::endl;
+    std::cout << "Waiting for player ..." << std::endl;
     _newPlayer = new Player;
     while (_running) {
         if (_listener.accept(*_newPlayer->getSocket()) == sf::Socket::Done) {

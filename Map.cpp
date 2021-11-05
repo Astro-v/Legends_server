@@ -75,7 +75,6 @@ int Map::getNumberPlayer() const {
     return _numberPlayers;
 }
 
-Player& Map::getPlayer(const int& index) {
-    return _players[index];
+Player& Map::getPlayer(const int& index) const {
+    return *_players[index];
 }
-

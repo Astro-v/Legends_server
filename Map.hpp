@@ -31,7 +31,7 @@ class Map {
 
     /*---- ACCESSOR ----*/
     int getNumberPlayer() const;
-    Player& getPlayer(const int& index);
+    Player& getPlayer(const int& index) const;
 
     protected:
     
@@ -66,14 +66,8 @@ namespace LOAD { // For loading the map
 
 /*==== SERVER_TO_CLIENT ====*/
 
-sf::Packet& operator <<(sf::Packet& packet, const Map* data);
+sf::Packet& operator <<(sf::Packet& packet, const Map& data);
 
-sf::Packet& operator <<(sf::Packet& packet, const Map* data) {
-    for (int i=0;i<data->getNumberPlayer();++i) {
-        packet << data->getPlayer(i);
-    }
-    return packet;
-}
 
 
 #endif // __MAP__
