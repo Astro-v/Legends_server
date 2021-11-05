@@ -60,9 +60,9 @@ void Map::receive() {
 }
 
 // Add the player and send to this player the data about the map
-//void Map::addPlayer(Player& player) {
+void Map::addPlayer(Player& player) {
 
-//}
+}
 
 // Move a player to another map
 void Map::changeMap(const int& index) {
@@ -74,7 +74,7 @@ int Map::getNumberPlayer() const {
     return _numberPlayers;
 }
 
-/*Player& Map::getPlayer(const int& index) {
+Player& Map::getPlayer(const int& index) {
     return _players[index];
-}*/
+}
 

@@ -24,7 +24,7 @@ class Player {
     ~Player();
 
     /*---- COMMUNICATION ----*/
-    bool loadMap(STC::Protocol protocol) const;       // Return true if everything has been sent well
+    bool sendMap(STC::Protocol protocol) const;    // Return true if everything has been sent well
     bool receive();                                // Return true if something has been receive
 
     /*---- ACCESSOR ----*/
@@ -32,15 +32,20 @@ class Player {
     sf::Uint32 getPos() const;
     sf::Uint32 getId() const;
 
+    /*---- NUMBER OF PLAYER ----*/
+    static int _numberOfPlayer;
+
     protected:
 
     private:
-    sf::TcpSocket _socket;                         // Socket for comunication
+    sf::TcpSocket* _socket;                         // Socket for comunication
     sf::IpAddress _ipAddress;                      // Ip address of the player
     unsigned short _port;                          // Port for the connection
     std::string _name;
     sf::Uint32 _pos;                               // Pos of the player
     sf::Uint32 _id;
 };
+
+Player::_numberOfPlayer = 0;
 
 #endif // __PLAYER__

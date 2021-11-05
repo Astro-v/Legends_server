@@ -9,7 +9,7 @@
 
 /*---- LOCAL FILE ----*/
 #include "Map.hpp"
-//#include "Player.hpp"
+#include "Player.hpp"
 
 class Legends {
     public:
@@ -28,11 +28,13 @@ class Legends {
 
     private:
     sf::TcpListener _listener;
+    std::vector<sf::TcpSocket *> _socket;
 
     bool _running;
 
     Map _maps[NUMBER_MAPS];             // All maps in the 
-    //std::vector<Player> _players;       // All the players
+    std::vector<Player> _players;       // All the players
+    int numberPlayer;
 
     /*---- THREAD ----*/
     sf::Mutex _mutex;

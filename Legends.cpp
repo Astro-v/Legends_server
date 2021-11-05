@@ -7,14 +7,13 @@
 
 /*---- LOCAL FILE ----*/
 #include "Map.hpp"
-// #include "Player.hpp"
+#include "Player.hpp"
 #include "Legends.hpp"
 #include "Dimension.hpp"
 
-#define SERVER_PORT 5500	
 
 /*---- CONSTRUCTOR ----*/
-Legends::Legends():_running(0) {
+Legends::Legends():_running(0),_numberPlayers(0) {
     _listener.listen(SERVER_PORT);
     LoadMaps();
 
@@ -39,4 +38,10 @@ void Legends::LoadMaps() {
 // Main thread that wait for players
 void Legends::waitForPlayer() { 
     std::cout << "everything is ok" << std::endl;
+    _socket.push_back(new sf::TcpSocket);
+    while (_running) {
+        if (_listener.accept(*_socket[numberPlayer]) == sf::Socket::Done) {
+            
+        }
+    }
 }
