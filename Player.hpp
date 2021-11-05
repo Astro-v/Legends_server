@@ -25,7 +25,7 @@ class Player {
 
     /*---- COMMUNICATION ----*/
     bool sendMap(STC::Protocol protocol) const;    // Return true if everything has been sent well
-    bool receive();                                // Return true if something has been receive
+    CTS::Protocol receive();                                // Receive data from the player, return the protocol
 
     /*---- ACCESSOR ----*/
     std::string getUserName() const;
@@ -33,7 +33,6 @@ class Player {
     sf::Uint32 getId() const;
     sf::TcpSocket* getSocket();
     void gotConnection();
-    void setUserName(std::string name);
 
     /*---- NUMBER OF PLAYER ----*/
     static int _numberOfPlayer;

@@ -10,6 +10,7 @@
 #include "Player.hpp"
 #include "Legends.hpp"
 #include "Dimension.hpp"
+#include "ClientToServer.hpp"
 
 
 /*---- CONSTRUCTOR ----*/
@@ -25,7 +26,11 @@ Legends::~Legends() {
         delete _players[i];
     }
     _players.clear();
-    delete _newPlayer
+        for (int i=0;i<_playersUnloged.length();++i) {
+        delete _playersUnloged[i];
+    }
+    _playersUnloged.clear();
+    delete _newPlayer;
 }
 
 /*---- INITIALIZE ----*/
@@ -46,8 +51,11 @@ void Legends::waitForPlayer() {
     while (_running) {
         if (_listener.accept(*_newPlayer->getSocket()) == sf::Socket::Done) {
             _newPlayer->gotConnection();
-            _players.push_back(_newPlayer);
+            _playersUnloged.push_back(_newPlayer);
             _newPlayer = new Player;
+        }
+        for (auto & player : _playersUnloged) {
+            if (player->receive() == CTS::CONNECTION)
         }
     }
 }

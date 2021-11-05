@@ -28,8 +28,8 @@ bool Player::sendMap(STC::Protocol protocol) const {
     
 }     
 
-// Return true if something has been receive
-bool Player::receive() {
+// Receive data from the player, return the protocol
+CTS::Protocol Player::receive() {
     _packetReceive.clear();
     if (_socket[index].receive(_packetReceive) == sf::Socket::Done) {
         _packetReceive >> _protocolCTS;
@@ -37,9 +37,10 @@ bool Player::receive() {
             CTS::Connection connection;
             _packetReceive >> connection;
             _userName = connection.userName;
+            return CTS::CONNECTION; // receive a connection
         }
     }
-    return false;
+    return CTS::NOTHING; // nothing receive
 }                     
 
 /*---- ACCESSOR ----*/
@@ -62,8 +63,4 @@ sf::TcpSocket* Player::getSocket() {
 void Player::gotConnection() {
     _ipAddress = _socket->getRemoteAddress();
     _port = _socket->getRemotePort();
-}
-
-void Player::setUserName(std::string userName) {
-    _userName = userName;
 }

@@ -11,7 +11,7 @@
 
 namespace CTS { // Client To Server 
     enum Protocol {
-        CONNECTION, CHECK_CONNECTION
+        NOTHING, CONNECTION, CHECK_CONNECTION
     };
 
     /*---- CONNECTION ----*/
