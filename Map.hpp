@@ -11,6 +11,7 @@
 /*---- LOCAL FILE ----*/
 #include "Tile.hpp"
 #include "Dimension.hpp"
+#include "Player.hpp"
 
 class Map {
     public:
@@ -35,7 +36,7 @@ class Map {
     protected:
     
     private:
-    std::vector<Player &> _players;          // List all player on the map
+    std::vector<Player *> _players;          // List all player on the map
     int _numberPlayers;                      // Number of player on the map
     Tile _tile[NUMBER_TILE_X][NUMBER_TILE_Y];                 // Table of all tiles
 
@@ -61,6 +62,17 @@ namespace LOAD { // For loading the map
     enum Map {
         POS_MAP, POS_NEIGHBORS, TILE
     };
+}
+
+/*==== SERVER_TO_CLIENT ====*/
+
+sf::Packet& operator <<(sf::Packet& packet, const Map* data);
+
+sf::Packet& operator <<(sf::Packet& packet, const Map* data) {
+    for (int i=0;i<data->getNumberPlayer();++i) {
+        packet << data->getPlayer(i);
+    }
+    return packet;
 }
 
 

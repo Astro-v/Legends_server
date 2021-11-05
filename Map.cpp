@@ -12,6 +12,7 @@
 #include "Tile.hpp"
 #include "Dimension.hpp"
 #include "Header.hpp"
+#include "Player.hpp"
 
 /*---- CONSTRUCTOR ----*/
 Map::Map():_numberPlayers(0),_numberOfNeighbors(0),_posX(0),_posY(0),_posZ(0) {

@@ -14,7 +14,7 @@
 
 
 /*---- CONSTRUCTOR ----*/
-Legends::Legends():_running(0),_numberPlayers(0) {
+Legends::Legends():_running(0) {
     _listener.listen(SERVER_PORT);
     LoadMaps();
 
@@ -45,7 +45,7 @@ void Legends::LoadMaps() {
     for (int index=0;index<NUMBER_MAPS;++index) {
         std::cout << "Map loaded : Maps/map"+std::to_string(index+1) << std::endl;
         _maps.push_back(new Map);
-        _maps->loadMap(std::string("Maps/map"+std::to_string(index)));
+        (--end(_maps))->loadMap(std::string("Maps/map"+std::to_string(index)));
     }
 }
 
@@ -62,7 +62,7 @@ void Legends::waitForPlayer() {
             _newPlayer = new Player;
         }
         for (auto it = begin(_playersUnlogged); it != end(_playersUnlogged); ++it) {
-            if (*it->receive() == CTS::LOGGED) {
+            if ((*it)->receive() == CTS::LOGGED) {
                 _players.push_back(*it);
                 _playersUnlogged.erase(it);
                 --it;

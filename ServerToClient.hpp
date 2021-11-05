@@ -9,41 +9,34 @@
 #include "SFML/Network.hpp"
 
 /*---- LOCAL FILE ----*/
-#include "Player.hpp"
-#include "Map.hpp"
 
 namespace STC { // Server To Client
     enum Protocol {
-        EOF, CHECK_CONNECTION, UPDATE_MAP, LOAD_MAP, FIGHT
+        EOF_PROTOCOL, CHECK_CONNECTION, UPDATE_MAP, LOAD_MAP, FIGHT
     };
 
     /*---- LOAD_MAP ----*/ 
     enum LoadMap {
-        EOF, PLAYER, MONSTER
+        EOF_LOAD_MAP, PLAYER, MONSTER
     };
-
-    struct LoadMapData {
-        std::vector<Player *> player;
-        // std::vector<Monster *> monster;
-    }
 
     /*---- UPDATE_MAP ----*/
     enum UpdateMap {
-        EOF, PLAYER_MOVE, PLAYER_APPEAR, MONSTER_MOVE, MONSTER_APPEAR, FIGHT_BEGIN
+        EOF_UPDATE_MAP, PLAYER_MOVE, PLAYER_APPEAR, MONSTER_MOVE, MONSTER_APPEAR, FIGHT_BEGIN
     };
 
-    //---- PLAYER_MOVE
-    struct PlayerMove {
-        sf::Uint32 newPosPlayer;       // New position of the player on the Map (index in the list _tile)
-        sf::Uint32 idPlayer;           // Id of the player that move
-    };
+
 }
 
 /*---- FLUX OPERATOR ----*/
 
+sf::Packet& operator <<(sf::Packet& packet, const STC::Protocol& data);   
+sf::Packet& operator <<(sf::Packet& packet, const STC::LoadMap& data);
+sf::Packet& operator <<(sf::Packet& packet, const STC::UpdateMap& data);
+
 /*---- PROTOCOL ----*/
 
-sf::Packet& operator <<(sf::Packet& packet, const STC::Protocol& data){   
+sf::Packet& operator <<(sf::Packet& packet, const STC::Protocol& data) {   
 	int send;
 	send = (int)data;
     return packet << send;
@@ -51,49 +44,18 @@ sf::Packet& operator <<(sf::Packet& packet, const STC::Protocol& data){
 
 /*---- LOAD_MAP ----*/
 
-sf::Packet& operator <<(sf::Packet& packet, const STC::LoadMap& data){   
+sf::Packet& operator <<(sf::Packet& packet, const STC::LoadMap& data) {   
 	int send;
 	send = (int)data;
     return packet << send;
-}
-
-sf::Packet& operator <<(sf::Packet& packet, const STC::LoadMapData& data){   
-    for (auto & player : data.player) {
-        packet << STC::PLAYER << *player;
-    }
-    return packet << send;
-}
-
-//---- PLAYER
-sf::Packet& operator <<(sf::Packet& packet, const Player& data) {
-    packet << data.getName() << data.getId() << data.getPos();
-    return packet;
-}
-
-sf::Packet& operator <<(sf::Packet& packet, const Map& data) {
-    for (int i=0;i<data.getNumberPlayer();++i) {
-        packet << data.getPlayer(i);
-    }
-    return packet;
 }
 
 /*---- UPDATE_MAP ----*/
 
-sf::Packet& operator <<(sf::Packet& packet, const STC::UpdateMap& data){   
+sf::Packet& operator <<(sf::Packet& packet, const STC::UpdateMap& data) {   
 	int send;
 	send = (int)data;
     return packet << send;
 }
-
-
-
-
-
-/*sf::Packet& operator <<(sf::Packet& packet, const UpdateMap& data) {
-    for (auto & element : data) {
-        packet << element;
-    }
-    return packet;
-} */
 
 #endif // __SERVER_TO_CLIENT__

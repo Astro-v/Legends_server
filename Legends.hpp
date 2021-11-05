@@ -35,7 +35,6 @@ class Legends {
     std::vector<Player *> _playersUnlogged;    // All the unloged players
     std::vector<Player *> _players;            // All the loged players
     Player *_newPlayer;                        // Waiting for new player
-    int numberPlayer;                          // Number of players  
 
     /*---- THREAD ----*/
     sf::Mutex _mutex;

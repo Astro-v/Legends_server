@@ -11,21 +11,24 @@
 
 namespace CTS { // Client To Server 
     enum Protocol {
-        NOTHING, LOGGED, CHECK_CONNECTION
+        EOF_PROTOCOL, NOTHING, LOGGED, CHECK_CONNECTION
     };
 
     /*---- LOGGED ----*/
     struct Logged {
         std::string userName;
         // std::string password;
-    }
+    };
 }
 
 /*---- FLUX OPERATOR ----*/
 
+sf::Packet& operator >>(sf::Packet& packet, CTS::Protocol& data);
+sf::Packet& operator >>(sf::Packet& packet, CTS::Logged& data);
+
 /*---- PROTOCOL ----*/
 
-sf::Packet& operator >>(sf::Packet& packet, const CTS::Protocol& data){   
+sf::Packet& operator >>(sf::Packet& packet, CTS::Protocol& data){   
 	int receive;
 	packet >> receive;
     data = (CTS::Protocol)receive;
@@ -34,8 +37,8 @@ sf::Packet& operator >>(sf::Packet& packet, const CTS::Protocol& data){
 
 /*---- LOGGED ----*/
 
-sf::Packet& operator >>(sf::Packet& packet, const CTS::Logged& data){   
-    return packet >> Logged.userName;
+sf::Packet& operator >>(sf::Packet& packet, CTS::Logged& data){   
+    return packet >> data.userName;
 }
 
 #endif // __CLIENT_TO_SERVER__

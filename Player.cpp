@@ -12,15 +12,16 @@
 #include "Map.hpp"
 
 /*---- CONSTRUCTOR ----*/
-Player::Player():_userName("Unknown"),_pos(0),_id(0),_socket(socket),_ipAddress("0.0.0.0"),_port(0) {
+Player::Player():_userName("Unknown"),_pos(0),_id(0),_ipAddress("0.0.0.0"),_port(0) {
     _socket = new sf::TcpSocket;
     _packetReceive.clear();
 }
 
 /*---- DESTRUCTOR ----*/
 Player::~Player() {
-    --_numberPlayers;
-    std::cout << "Number of player : " << _numberPlayers << std::endl;
+    delete _socket;
+    --_numberOfPlayer;
+    std::cout << "Number of player : " << _numberOfPlayer << std::endl;
 }
 
 /*---- COMMUNICATION ----*/
@@ -32,13 +33,18 @@ bool Player::loadMap() const {
 // Receive data from the player, return the protocol
 CTS::Protocol Player::receive() {
     _packetReceive.clear();
-    if (_socket[index].receive(_packetReceive) == sf::Socket::Done) {
+    if (_socket->receive(_packetReceive) == sf::Socket::Done) {
         _packetReceive >> _protocolCTS;
-        if (_protocolCTS == CTS::CONNECTION) {
-            CTS::Connection connection;
-            _packetReceive >> connection;
-            _userName = connection.userName;
-            return CTS::CONNECTION; // receive a connection
+        while (_protocolCTS != CTS::EOF_PROTOCOL) {
+            if (_protocolCTS == CTS::LOGGED) {
+                CTS::Logged logged;
+                _packetReceive >> logged;
+                _userName = logged.userName;
+                ++_numberOfPlayer;
+                std::cout << "Number of player : " << _numberOfPlayer << std::endl;
+                return CTS::LOGGED; // receive a connection
+            }
+            _packetReceive >> _protocolCTS;
         }
     }
     return CTS::NOTHING; // nothing receive

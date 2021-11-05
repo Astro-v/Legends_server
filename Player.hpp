@@ -24,7 +24,7 @@ class Player {
     ~Player();
 
     /*---- COMMUNICATION ----*/
-    bool loadMap(STC::LoadMap protocol) const;                                   // Send the map to the player, return true if everything has been sent well
+    bool loadMap() const;                                   // Send the map to the player, return true if everything has been sent well
     CTS::Protocol receive();                                // Receive data from the player, return the protocol
 
     /*---- ACCESSOR ----*/
@@ -53,6 +53,40 @@ class Player {
     sf::Uint32 _id;
 };
 
-Player::_numberOfPlayer = 0;
+/*==== SERVER_TO_CLIENT ====*/
+namespace STC {
+    /*---- LOAD_MAP ----*/ 
+    struct LoadMapData {
+        std::vector<Player *> player;
+        // std::vector<Monster *> monster;
+    };
+
+    /*---- UPDATE_MAP ----*/
+    //---- PLAYER_MOVE
+    struct PlayerMove {
+        sf::Uint32 newPosPlayer;       // New position of the player on the Map (index in the list _tile)
+        sf::Uint32 idPlayer;           // Id of the player that move
+    };
+}
+
+sf::Packet& operator <<(sf::Packet& packet, const Player* data);
+sf::Packet& operator <<(sf::Packet& packet, const STC::LoadMapData& data) ;
+
+/*---- LOAD_MAP ----*/ 
+sf::Packet& operator <<(sf::Packet& packet, const STC::LoadMapData& data) {   
+    for (auto & player : data.player) {
+        packet << STC::PLAYER << *player;
+    }
+    return packet;
+}
+//---- PLAYER
+sf::Packet& operator <<(sf::Packet& packet, const Player* data) {
+    packet << data->getUserName() << data->getId() << data->getPos();
+    return packet;
+}
+
+
+
+
 
 #endif // __PLAYER__
