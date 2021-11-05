@@ -9,6 +9,7 @@
 #include "Player.hpp"
 #include "ServerToClient.hpp"
 #include "ClientToServer.hpp"
+#include "Map.hpp"
 
 /*---- CONSTRUCTOR ----*/
 Player::Player():_userName("Unknown"),_pos(0),_id(0),_socket(socket),_ipAddress("0.0.0.0"),_port(0) {
@@ -24,8 +25,8 @@ Player::~Player() {
 
 /*---- COMMUNICATION ----*/
 // Return true if everything has been sent well
-bool Player::sendMap(STC::Protocol protocol) const {
-    
+bool Player::loadMap() const {
+    return true;
 }     
 
 // Receive data from the player, return the protocol

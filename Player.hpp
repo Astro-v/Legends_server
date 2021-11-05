@@ -24,7 +24,7 @@ class Player {
     ~Player();
 
     /*---- COMMUNICATION ----*/
-    bool sendMap(STC::Protocol protocol) const;    // Return true if everything has been sent well
+    bool loadMap(STC::LoadMap protocol) const;                                   // Send the map to the player, return true if everything has been sent well
     CTS::Protocol receive();                                // Receive data from the player, return the protocol
 
     /*---- ACCESSOR ----*/

@@ -31,8 +31,8 @@ class Legends {
 
     bool _running;
 
-    Map _maps[NUMBER_MAPS];                    // All maps in the 
-    std::vector<Player *> _playersUnloged;     // All the unloged players
+    std::vector<Map *> _maps;                  // All maps
+    std::vector<Player *> _playersUnlogged;    // All the unloged players
     std::vector<Player *> _players;            // All the loged players
     Player *_newPlayer;                        // Waiting for new player
     int numberPlayer;                          // Number of players  

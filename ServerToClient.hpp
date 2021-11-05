@@ -22,6 +22,11 @@ namespace STC { // Server To Client
         EOF, PLAYER, MONSTER
     };
 
+    struct LoadMapData {
+        std::vector<Player *> player;
+        // std::vector<Monster *> monster;
+    }
+
     /*---- UPDATE_MAP ----*/
     enum UpdateMap {
         EOF, PLAYER_MOVE, PLAYER_APPEAR, MONSTER_MOVE, MONSTER_APPEAR, FIGHT_BEGIN
@@ -49,6 +54,13 @@ sf::Packet& operator <<(sf::Packet& packet, const STC::Protocol& data){
 sf::Packet& operator <<(sf::Packet& packet, const STC::LoadMap& data){   
 	int send;
 	send = (int)data;
+    return packet << send;
+}
+
+sf::Packet& operator <<(sf::Packet& packet, const STC::LoadMapData& data){   
+    for (auto & player : data.player) {
+        packet << STC::PLAYER << *player;
+    }
     return packet << send;
 }
 

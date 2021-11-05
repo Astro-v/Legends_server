@@ -22,15 +22,21 @@ Legends::Legends():_running(0),_numberPlayers(0) {
 
 /*---- DESTRUCTOR ----*/
 Legends::~Legends() {
-    for (int i=0;i<_players.length();++i) {
-        delete _players[i];
+    //---- DELETE PLAYER
+    for (auto & player : _players) {
+        delete player;
     }
     _players.clear();
-        for (int i=0;i<_playersUnloged.length();++i) {
-        delete _playersUnloged[i];
+    for (auto & player : _playersUnlogged) {
+        delete player;
     }
-    _playersUnloged.clear();
+    _playersUnlogged.clear();
     delete _newPlayer;
+
+    //---- DELETE MAPS
+    for (auto & map : _maps) {
+        delete map;
+    }
 }
 
 /*---- INITIALIZE ----*/
@@ -38,7 +44,8 @@ Legends::~Legends() {
 void Legends::LoadMaps() {
     for (int index=0;index<NUMBER_MAPS;++index) {
         std::cout << "Map loaded : Maps/map"+std::to_string(index+1) << std::endl;
-        _maps[index].loadMap(std::string("Maps/map"+std::to_string(index)));
+        _maps.push_back(new Map);
+        _maps->loadMap(std::string("Maps/map"+std::to_string(index)));
     }
 }
 
@@ -51,11 +58,15 @@ void Legends::waitForPlayer() {
     while (_running) {
         if (_listener.accept(*_newPlayer->getSocket()) == sf::Socket::Done) {
             _newPlayer->gotConnection();
-            _playersUnloged.push_back(_newPlayer);
+            _playersUnlogged.push_back(_newPlayer);
             _newPlayer = new Player;
         }
-        for (auto & player : _playersUnloged) {
-            if (player->receive() == CTS::CONNECTION)
+        for (auto it = begin(_playersUnlogged); it != end(_playersUnlogged); ++it) {
+            if (*it->receive() == CTS::LOGGED) {
+                _players.push_back(*it);
+                _playersUnlogged.erase(it);
+                --it;
+            }
         }
     }
 }
