@@ -32,9 +32,9 @@ class Legends {
 
     bool _running;
 
-    Map _maps[NUMBER_MAPS];             // All maps in the 
-    std::vector<Player> _players;       // All the players
-    int numberPlayer;
+    Map _maps[NUMBER_MAPS];                    // All maps in the 
+    std::vector<Player *> _players;            // All the players
+    int numberPlayer;                          // Number of players  
 
     /*---- THREAD ----*/
     sf::Mutex _mutex;

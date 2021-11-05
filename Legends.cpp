@@ -21,7 +21,14 @@ Legends::Legends():_running(0),_numberPlayers(0) {
 
 /*---- DESTRUCTOR ----*/
 Legends::~Legends() {
-
+    for (int i=0;i<_socket.length();++i) {
+        delete _socket[i];
+    }
+    _socket.clear();
+    for (int i=0;i<_players.length();++i) {
+        delete _players[i];
+    }
+    _players.clear();
 }
 
 /*---- INITIALIZE ----*/
@@ -41,7 +48,9 @@ void Legends::waitForPlayer() {
     _socket.push_back(new sf::TcpSocket);
     while (_running) {
         if (_listener.accept(*_socket[numberPlayer]) == sf::Socket::Done) {
-            
+            if (FIRST_CONNECTION)
+            _players.push_back(nuw Player());
+            _socket.push_back(new sf::TcpSocket);
         }
     }
 }

@@ -9,7 +9,7 @@
 
 namespace CTS { // Client To Server 
     enum Protocol {
-        CHECK_CONNECTION
+        FIRST_CONNECTION, CHECK_CONNECTION
     };
 }
 
