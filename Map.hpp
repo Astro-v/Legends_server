@@ -50,7 +50,7 @@ class Map {
     std::vector<int> _posYNeighbors;           // Position of the neighbors map
     std::vector<int> _posZNeighbors;           // Altitude of the neighbors map
 
-    int _numberOfNeighbors;                   // Number of Neighbors
+    int _numberOfNeighbors;                    // Number of Neighbors
 };
 
 namespace LOAD { // For loading the map
