@@ -36,19 +36,19 @@ class Map {
     protected:
     
     private:
-    std::vector<Player *> _players;          // List all player on the map
-    int _numberPlayers;                      // Number of player on the map
-    Tile _tile[NUMBER_TILE_X][NUMBER_TILE_Y];                 // Table of all tiles
+    std::vector<Player *> _players;            // List all player on the map
+    int _numberPlayers;                        // Number of player on the map
+    Tile _tile[NUMBER_TILE_X][NUMBER_TILE_Y];  // Table of all tiles
 
     //std::vector<Map &>  _neighbors;          // References over the neighbors map
 
-    int _posX;                        // Position of the map
-    int _posY;                        // Position of the map
-    int _posZ;                        // Altitude of the map (<0 for underground maps)
+    int _posX;                                 // Position of the map
+    int _posY;                                 // Position of the map
+    int _posZ;                                 // Altitude of the map (<0 for underground maps)
 
-    std::vector<int> _posXNeighbors;  // Position of the neighbors map
-    std::vector<int> _posYNeighbors;  // Position of the neighbors map
-    std::vector<int> _posZNeighbors;  // Altitude of the neighbors map
+    std::vector<int> _posXNeighbors;           // Position of the neighbors map
+    std::vector<int> _posYNeighbors;           // Position of the neighbors map
+    std::vector<int> _posZNeighbors;           // Altitude of the neighbors map
 
     int _numberOfNeighbors;                   // Number of Neighbors
 };
