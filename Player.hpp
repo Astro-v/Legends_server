@@ -35,8 +35,9 @@ class Player {
     void gotConnection();
 
     /*---- NUMBER OF PLAYER ----*/
-    //static int _numberOfPlayer;
 
+    static int getNumberPlayer();
+    
     protected:
 
     private:
@@ -51,6 +52,9 @@ class Player {
     std::string _userName;
     sf::Uint32 _pos;                               // Pos of the player
     sf::Uint32 _id;
+
+    /*---- NUMBER OF PLAYER ----*/
+    static int _numberOfPlayer;
 };
 
 /*==== SERVER_TO_CLIENT ====*/
@@ -70,6 +74,6 @@ namespace STC {
 }
 
 sf::Packet& operator <<(sf::Packet& packet, const Player& data);
-sf::Packet& operator <<(sf::Packet& packet, const STC::LoadMapData& data) ;
+sf::Packet& operator <<(sf::Packet& packet, const STC::LoadMapData& data);
 
 #endif // __PLAYER__

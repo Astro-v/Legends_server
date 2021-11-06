@@ -16,8 +16,8 @@
 /*---- CONSTRUCTOR ----*/
 Legends::Legends():_running(true) {
     _listener.listen(SERVER_PORT);
+    _listener.setBlocking(false);
     loadMaps();
-
 }
 
 /*---- DESTRUCTOR ----*/
@@ -57,6 +57,7 @@ void Legends::waitForPlayer() {
     _newPlayer = new Player;
     while (_running) {
         if (_listener.accept(*_newPlayer->getSocket()) == sf::Socket::Done) {
+            std::cout << "Connection receive" << std::endl;
             _newPlayer->gotConnection();
             _playersUnlogged.push_back(_newPlayer);
             _newPlayer = new Player;

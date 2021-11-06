@@ -1,5 +1,11 @@
 /*---- OVERLOAD FLUX OPERATOR ----*/
 
+/*---- LIBRARY ----*/
+
+/*---- LIBRARY SFML ----*/
+#include "SFML/Network.hpp"
+
+/*---- LOCAL FILE ----*/
 #include "ClientToServer.hpp"
 #include "ServerToClient.hpp"
 #include "Player.hpp"
@@ -33,24 +39,24 @@ sf::Packet& operator <<(sf::Packet& packet, const Player& data) {
 /*---- PROTOCOL ----*/
 
 sf::Packet& operator <<(sf::Packet& packet, const STC::Protocol& data) {   
-	int send;
-	send = (int)data;
+	sf::Uint16 send;
+	send = (sf::Uint16)data;
     return packet << send;
 }
 
 /*---- LOAD_MAP ----*/
 
 sf::Packet& operator <<(sf::Packet& packet, const STC::LoadMap& data) {   
-	int send;
-	send = (int)data;
+	sf::Uint16 send;
+	send = (sf::Uint16)data;
     return packet << send;
 }
 
 /*---- UPDATE_MAP ----*/
 
 sf::Packet& operator <<(sf::Packet& packet, const STC::UpdateMap& data) {   
-	int send;
-	send = (int)data;
+	sf::Uint16 send;
+	send = (sf::Uint16)data;
     return packet << send;
 }
 
@@ -59,7 +65,7 @@ sf::Packet& operator <<(sf::Packet& packet, const STC::UpdateMap& data) {
 /*---- PROTOCOL ----*/
 
 sf::Packet& operator >>(sf::Packet& packet, CTS::Protocol& data){   
-	int receive;
+	sf::Uint16 receive;
 	packet >> receive;
     data = (CTS::Protocol)receive;
     return packet;
