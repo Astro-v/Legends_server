@@ -20,6 +20,18 @@ namespace STC { // Server To Client
         EOF_LOAD_MAP, PLAYER, MONSTER
     };
 
+    //---- PLAYER 
+    struct Player {
+        std::string userName;
+        // sf::Uint32 pos;
+    }
+
+    //---- MONSTER 
+    struct Monster {
+        std::string userName;
+        // sf::Uint32 pos;
+    }
+
     /*---- UPDATE_MAP ----*/
     enum UpdateMap {
         EOF_UPDATE_MAP, PLAYER_MOVE, PLAYER_APPEAR, MONSTER_MOVE, MONSTER_APPEAR, FIGHT_BEGIN
@@ -29,9 +41,15 @@ namespace STC { // Server To Client
 }
 
 /*---- FLUX OPERATOR ----*/
-
+/*==== PROTOCOL ====*/
 sf::Packet& operator <<(sf::Packet& packet, const STC::Protocol& data);   
+/*---- LOAD_MAP ----*/
 sf::Packet& operator <<(sf::Packet& packet, const STC::LoadMap& data);
+//---- PLAYER
+sf::Packet& operator <<(sf::Packet& packet, const STC::Player& data);
+//---- MONSTER
+sf::Packet& operator <<(sf::Packet& packet, const STC::Monster& data);
+/*---- UPDATE_MAP ----*/
 sf::Packet& operator <<(sf::Packet& packet, const STC::UpdateMap& data);
 
 #endif // __SERVER_TO_CLIENT__

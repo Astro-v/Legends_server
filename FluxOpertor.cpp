@@ -8,35 +8,10 @@
 /*---- LOCAL FILE ----*/
 #include "ClientToServer.hpp"
 #include "ServerToClient.hpp"
-#include "Player.hpp"
-#include "Map.hpp"
 
-/*---- MAP ----*/
-sf::Packet& operator <<(sf::Packet& packet, const Map& data) {
-    for (int i=0;i<data.getNumberPlayer();++i) {
-        packet << data.getPlayer(i);
-    }
-    return packet;
-}
+/*======== SERVER_TO_CLIENT ========*/
 
-/*---- PLAYER ----*/
-
-/*---- LOAD_MAP ----*/ 
-sf::Packet& operator <<(sf::Packet& packet, const STC::LoadMapData& data) {   
-    for (auto & player : data.player) {
-        packet << STC::PLAYER << *player;
-    }
-    return packet;
-}
-//---- PLAYER
-sf::Packet& operator <<(sf::Packet& packet, const Player& data) {
-    packet << data.getUserName() << data.getId() << data.getPos();
-    return packet;
-}
-
-/*---- SERVER_TO_CLIENT ----*/
-
-/*---- PROTOCOL ----*/
+/*==== PROTOCOL ====*/
 
 sf::Packet& operator <<(sf::Packet& packet, const STC::Protocol& data) {   
 	sf::Uint16 send;
@@ -52,6 +27,17 @@ sf::Packet& operator <<(sf::Packet& packet, const STC::LoadMap& data) {
     return packet << send;
 }
 
+//---- PLAYER
+sf::Packet& operator <<(sf::Packet& packet, const STC::Player& data) {
+    packet << data.userName;
+    return packet;
+}
+
+//---- MONSTER
+sf::Packet& operator <<(sf::Packet& packet, const STC::Monster& data) {
+    return packet;
+}
+
 /*---- UPDATE_MAP ----*/
 
 sf::Packet& operator <<(sf::Packet& packet, const STC::UpdateMap& data) {   
@@ -60,9 +46,9 @@ sf::Packet& operator <<(sf::Packet& packet, const STC::UpdateMap& data) {
     return packet << send;
 }
 
-/*---- CLIENT_TO_SERVER ----*/
+/*======== CLIENT_TO_SERVER ========*/
 
-/*---- PROTOCOL ----*/
+/*==== PROTOCOL ====*/
 
 sf::Packet& operator >>(sf::Packet& packet, CTS::Protocol& data){   
 	sf::Uint16 receive;

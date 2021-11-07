@@ -57,23 +57,4 @@ class Player {
     static int _numberOfPlayer;
 };
 
-/*==== SERVER_TO_CLIENT ====*/
-namespace STC {
-    /*---- LOAD_MAP ----*/ 
-    struct LoadMapData {
-        std::vector<Player *> player;
-        // std::vector<Monster *> monster;
-    };
-
-    /*---- UPDATE_MAP ----*/
-    //---- PLAYER_MOVE
-    struct PlayerMove {
-        sf::Uint32 newPosPlayer;       // New position of the player on the Map (index in the list _tile)
-        sf::Uint32 idPlayer;           // Id of the player that move
-    };
-}
-
-sf::Packet& operator <<(sf::Packet& packet, const Player& data);
-sf::Packet& operator <<(sf::Packet& packet, const STC::LoadMapData& data);
-
 #endif // __PLAYER__

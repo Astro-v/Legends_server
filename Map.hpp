@@ -64,8 +64,4 @@ namespace LOAD { // For loading the map
     };
 }
 
-/*==== SERVER_TO_CLIENT ====*/
-
-sf::Packet& operator <<(sf::Packet& packet, const Map& data);
-
 #endif // __MAP__
