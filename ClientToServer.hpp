@@ -17,7 +17,7 @@ namespace CTS { // Client To Server
     /*---- LOGGED ----*/
     struct Logged {
         std::string userName;
-        // std::string password;
+        std::string password;
     };
 }
 

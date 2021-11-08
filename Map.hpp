@@ -26,8 +26,9 @@ class Map {
 
     /*---- COMMUNICATION ----*/
     void receive();
-    void addPlayer(Player& player);    // Add the player and send to this player the data about the map
-    void changeMap(const int& index);  // Move a player to another map
+    void send(STC::Protocol protocol, const int& index) const;   // Send data to the player
+    void addPlayer(Player& player);            // Add the player and send to this player the data about the map
+    void changeMap(const int& index);          // Move a player to another map
 
     /*---- ACCESSOR ----*/
     int getNumberPlayer() const;
@@ -39,6 +40,10 @@ class Map {
     std::vector<Player *> _players;            // List all player on the map
     int _numberPlayers;                        // Number of player on the map
     Tile _tile[NUMBER_TILE_X][NUMBER_TILE_Y];  // Table of all tiles
+
+    /*---- COMMUNICATION ----*/
+    sf::Packet _packetReceive;
+    sf::Packet _packetSend; 
 
     //std::vector<Map &>  _neighbors;          // References over the neighbors map
 

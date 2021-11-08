@@ -1,6 +1,7 @@
 /*---- LIBRARY ----*/
 #include <iostream>
 #include <string>
+#include <fstream>
 
 /*---- LIBRARY SFML ----*/
 #include "SFML/Network.hpp"
@@ -14,12 +15,12 @@
 int Player::_numberOfPlayer = 0;
 
 /*---- CONSTRUCTOR ----*/
-Player::Player():_userName("Unknown"),_pos(0),_id(0),_ipAddress("0.0.0.0"),_port(0) {
+Player::Player():_userName("Unknown"),_pos(0),_id(0),_ipAddress("0.0.0.0"),_port(0),_logged(false) {
     _socket = new sf::TcpSocket;
     _socket->setBlocking(false);
     ++_numberOfPlayer;
     std::cout << "Number of class player : " << _numberOfPlayer << std::endl;
-    _packetReceive.clear();
+    _packetSend.clear();
 }
 
 /*---- DESTRUCTOR ----*/
@@ -30,28 +31,14 @@ Player::~Player() {
 }
 
 /*---- COMMUNICATION ----*/
-// Return true if everything has been sent well
-bool Player::loadMap() const {
-    return true;
-}     
+// Receive data from the player, return the status
+sf::Status receive(sf::Packet& packetReceive)  {
+    return _socket->receive(packetReceive);
+}
 
-// Receive data from the player, return the protocol
-CTS::Protocol Player::receive() {
-    _packetReceive.clear();
-    if (_socket->receive(_packetReceive) == sf::Socket::Done) {
-        _packetReceive >> _protocolCTS;
-        while (_protocolCTS != CTS::EOF_PROTOCOL) {
-            if (_protocolCTS == CTS::LOGGED) {
-                CTS::Logged logged;
-                _packetReceive >> logged;
-                _userName = logged.userName;
-                return CTS::LOGGED; // receive a connection
-            }
-            _packetReceive >> _protocolCTS;
-        }
-    }
-    return CTS::NOTHING; // nothing receive
-}                     
+void Player::send(const sf::Packet& packetSend) const {
+    _socket->send(packetSend);
+}
 
 /*---- ACCESSOR ----*/
 std::string Player::getUserName() const {
@@ -73,6 +60,28 @@ sf::TcpSocket* Player::getSocket() {
 void Player::gotConnection() {
     _ipAddress = _socket->getRemoteAddress();
     _port = _socket->getRemotePort();
+}
+
+bool Player::setLogged(CTS::Logged logged) {
+    _path = std::string("Player/")+logged.userName;
+    _userName = logged.userName;
+    _password = logged.password;
+    _packetSend.clear();
+    _packetSend << STC::LOGGED;
+    // Opening the file
+    std::ifstream file(_path);
+    if (file) {
+        // Read Data of the player
+        _packetSend << STC::SUCCEED;
+        _packetSend << STC::EOF_PROTOCOL;
+        _socket->send(_packetSend);
+    } else {
+        _packetSend << STC::FAILURE;
+        _packetSend << STC::EOF_PROTOCOL;
+        _socket->send(_packetSend);
+        std::cout << "ERROR: Impossible to open the file " << _path << std::endl;
+    }
+    return false;
 }
 
 /*---- NUMBER OF PLAYER ----*/

@@ -17,6 +17,7 @@
 Legends::Legends():_running(true) {
     _listener.listen(SERVER_PORT);
     _listener.setBlocking(false);
+    _packetReceive.clear();
     loadMaps();
 }
 
@@ -63,10 +64,20 @@ void Legends::waitForPlayer() {
             _newPlayer = new Player;
         }
         for (auto it = begin(_playersUnlogged); it != end(_playersUnlogged); ++it) {
-            if ((*it)->receive() == CTS::LOGGED) {
-                _players.push_back(*it);
-                _playersUnlogged.erase(it);
-                --it;
+            if ((*it)->receive(_packetReceive) == sf::Socket::Done) {
+                CTS::Protocol protocol;
+                _packetReceive >> protocol;
+                if (protocol == CTS::LOGGED) {
+                    CTS::Logged logged;
+                    _packetReceive >> logged;
+                    if ((it*)->setLogged(logged)) {
+                        _players.push_back(*it);
+                        _playersUnlogged.erase(it);
+                        --it;
+                    }
+                }
+
+                _packetReceive.clear();
             }
         }
     }

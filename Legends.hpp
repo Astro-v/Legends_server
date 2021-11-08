@@ -27,7 +27,10 @@ class Legends {
     void loadMaps();                              // Load all the maps
 
     private:
+
+    /*---- COMMUNICATION ----*/
     sf::TcpListener _listener;
+    sf::Packet _packetReceive;
 
     bool _running;
 

@@ -24,8 +24,8 @@ class Player {
     ~Player();
 
     /*---- COMMUNICATION ----*/
-    bool loadMap() const;                                   // Send the map to the player, return true if everything has been sent well
-    CTS::Protocol receive();                                // Receive data from the player, return the protocol
+    sf::Status receive(sf::Packet& packetReceive);                                // Receive data from the player, return the protocol
+    void send(const sf::Packet packetSend) const;
 
     /*---- ACCESSOR ----*/
     std::string getUserName() const;
@@ -34,24 +34,32 @@ class Player {
     sf::TcpSocket* getSocket();
     void gotConnection();
 
+    /*---- LOAD THE PLAYER DATA ----*/
+    void logPlayer(CTS::Logged logged);
+
     /*---- NUMBER OF PLAYER ----*/
 
     static int getNumberPlayer();
     
     protected:
+    
 
     private:
     /*---- CONECTION DATA ----*/
     sf::TcpSocket* _socket;                        // Socket for comunication
-    sf::Packet _packetReceive;                     // Packet for reception
     sf::IpAddress _ipAddress;                      // Ip address of the player
     unsigned short _port;                          // Port for the connection
     CTS::Protocol _protocolCTS;
+    sf::Packet _packetSend;
 
     /*---- PLAYER DATA ----*/
     std::string _userName;
     sf::Uint32 _pos;                               // Pos of the player
     sf::Uint32 _id;
+    std::string _path;                             // Path to the player data
+    std::string _password;                         // Password of the player
+    bool _logged; 
+
 
     /*---- NUMBER OF PLAYER ----*/
     static int _numberOfPlayer;

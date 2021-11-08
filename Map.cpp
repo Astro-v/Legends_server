@@ -57,7 +57,50 @@ void Map::loadMap(std::string const& path) {
 
 /*---- COMMUNICATION ----*/
 void Map::receive() {
+    for (auto & elem : _players) {
+        _packetReceive.clear()
+        if (elem->receive(_packetReceive) == sf::Socket::Done) {
+            STC::Protocol protocol;
+            _packetReceive >> protocol;
+            while (protocol != CTS::EOF_PROTOCOL) {
+                switch (protocol) {
+                    case CTS::NOTHING:
+                        break;
+                    case CTS::CHECK_CONNECTION:
+                        break;
+                }
+                _packetReceive >> protocol;
+            }
+        }
+    }
+}
 
+void Map::send(STC::Protocol protocol, const int& index) const{
+    _packetSend.clear();
+    switch (protocol) {
+        case STC::CHECK_CONNECTION:
+            _packetSend << STC::CHECK_CONNECTION;
+            break;
+        case STC::UPDATE_MAP:
+            _packetSend << STC::UPDATE_MAP;
+            break;
+        case STC::LOAD_MAP:
+            _packetSend << STC::LOAD_MAP;
+            for (auto & elem : _players) {
+                if (elem->getId() != _players[index]->getId()) {
+                    STC::Player player;
+                    player.userName = elem->getUserName();
+                    packetSend << STC::PLAYER << player;
+                }
+            }
+            _packetSend << STC::EOF_LOAD_MAP;
+            break;
+        case STC::FIGHT:
+            _packetSend << STC::FIGHT;
+            break;
+    }
+    _packetSend << STC::EOF_PROTOCOL;
+    _players[index]->send(_packetSend);
 }
 
 // Add the player and send to this player the data about the map

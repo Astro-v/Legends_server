@@ -12,7 +12,7 @@
 
 namespace STC { // Server To Client
     enum Protocol {
-        EOF_PROTOCOL, CHECK_CONNECTION, UPDATE_MAP, LOAD_MAP, FIGHT
+        EOF_PROTOCOL, CHECK_CONNECTION, UPDATE_MAP, LOAD_MAP, FIGHT, LOGGED
     };
 
     /*---- LOAD_MAP ----*/ 
@@ -37,6 +37,10 @@ namespace STC { // Server To Client
         EOF_UPDATE_MAP, PLAYER_MOVE, PLAYER_APPEAR, MONSTER_MOVE, MONSTER_APPEAR, FIGHT_BEGIN
     };
 
+    /*---- LOGGED ----*/
+    enum Logged {
+        SUCCEED, FAILURE
+    }
 
 }
 
