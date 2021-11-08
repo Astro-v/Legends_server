@@ -1,0 +1,2 @@
+# Legends_server
+Legends is a MMORPG. It is a turns by turns multiplayer game. The aim of the project is to create a worls where player can move by clicking and discover the world. This world is full of adventure, the aim is to progress by helping people and figthing monster and then once the player became a master, he can figth against other player in order to defend his territory. In Legends, the player have to choose wisely between 3 side.
