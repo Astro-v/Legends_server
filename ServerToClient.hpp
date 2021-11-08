@@ -46,14 +46,16 @@ namespace STC { // Server To Client
 
 /*---- FLUX OPERATOR ----*/
 /*==== PROTOCOL ====*/
-sf::Packet& operator <<(sf::Packet& packet, const STC::Protocol& data);   
+sf::Packet& operator >>(sf::Packet& packet, STC::Protocol& data);   
 /*---- LOAD_MAP ----*/
-sf::Packet& operator <<(sf::Packet& packet, const STC::LoadMap& data);
+sf::Packet& operator >>(sf::Packet& packet, STC::LoadMap& data);
 //---- PLAYER
-sf::Packet& operator <<(sf::Packet& packet, const STC::Player& data);
+sf::Packet& operator >>(sf::Packet& packet, nst STC::Player& data);
 //---- MONSTER
-sf::Packet& operator <<(sf::Packet& packet, const STC::Monster& data);
+sf::Packet& operator >>(sf::Packet& packet, STC::Monster& data);
 /*---- UPDATE_MAP ----*/
-sf::Packet& operator <<(sf::Packet& packet, const STC::UpdateMap& data);
+sf::Packet& operator >>(sf::Packet& packet, STC::UpdateMap& data);
+/*---- LOGGED ----*/
+sf::Packet& operator >>(sf::Packet& packet, STC::Logged& data);
 
 #endif // __SERVER_TO_CLIENT__
